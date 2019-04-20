@@ -28,8 +28,17 @@ public class Keystore {
 					serializeKeystore(keystoreFilePath, keystore);
 					break;
 				case "get":
+					System.out.println(keystore.get(nextLineArgs[1]));
 					break;
 				case "set":
+					String key = nextLineArgs[1];
+					String value = nextLineArgs[0];
+					System.out.println(String.format("Adding key-value pair '%s'-'%s' to keystore", key, value));
+					keystore.put(key, value);
+					break;
+				case "print":
+					System.out.println("Printing out current keystore...");
+					System.out.println(keystore.toString());
 					break;
 				default:
 					System.out.println("Unrecognized command. Please refer to README.md on supported commands");
