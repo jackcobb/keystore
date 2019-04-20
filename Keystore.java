@@ -11,6 +11,8 @@ public class Keystore {
 		} else {
 			String keystoreFilePath = args[0];
 			HashMap<String, String> keystore = deserializeKeystore(keystoreFilePath);
+			System.out.println(String.format("Loaded the below keystore into memory from '%s'", keystoreFilePath));
+			System.out.println(keystore.toString());
 			
 			while (!userRequestedExit) {
 				Scanner scanner = new Scanner(System.in);
@@ -21,9 +23,16 @@ public class Keystore {
 				case "end":
 				case "exit":
 				case "quit":
+					System.out.println(String.format("Requested termination. Serializing keystore to file '%s'", keystoreFilePath));
 					userRequestedExit = true;
-				//get
-				//set
+					serializeKeystore(keystoreFilePath, keystore);
+					break;
+				case "get":
+					break;
+				case "set":
+					break;
+				default:
+					System.out.println("Unrecognized command. Please refer to README.md on supported commands");
 				}
 					
 			}
