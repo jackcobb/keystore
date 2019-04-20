@@ -1,5 +1,4 @@
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,6 +20,7 @@ public class Keystore {
 			System.out.println(keystore.toString());
 			
 			while (!userRequestedExit) {
+				@SuppressWarnings("resource")
 				Scanner scanner = new Scanner(System.in);
 				String[] nextLineArgs = scanner.nextLine().split(" ");
 				
@@ -66,7 +66,7 @@ public class Keystore {
 			FileInputStream fis = new FileInputStream(filePath);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			HashMap<String, String> keystore = null;
-	        keystore = (HashMap) ois.readObject();
+	        keystore = (HashMap<String, String>) ois.readObject();
 			ois.close();
 	        fis.close();
 	        return keystore;
@@ -80,7 +80,6 @@ public class Keystore {
 	
 	
 	private static void serializeKeystore(String filePath, HashMap<String, String> keystore) {
-		//serialize keystore to a new file located at filePath param
 		try {
 			FileOutputStream fos = new FileOutputStream(filePath);
 			ObjectOutputStream oos = new ObjectOutputStream (fos);
