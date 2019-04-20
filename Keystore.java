@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-
 public class Keystore {
 
 	public static void main(String[] args) {
@@ -15,12 +14,18 @@ public class Keystore {
 			
 			while (!userRequestedExit) {
 				Scanner scanner = new Scanner(System.in);
+				String[] nextLineArgs = scanner.nextLine().split(" ");
 				
-				//get next line
-				//switch off first word 
-					//exit, kill, end, quit
-					//get
-					//set
+				switch (nextLineArgs[0]) {
+				case "kill":
+				case "end":
+				case "exit":
+				case "quit":
+					userRequestedExit = true;
+				//get
+				//set
+				}
+					
 			}
 		}
 
@@ -34,8 +39,7 @@ public class Keystore {
 	private static HashMap<String, String> deserializeKeystore(String filePath) {
 		//if file not found, return new hashmap
 		//if file found, try deserialization; catch exceptions
-		return null;
-		
+		return new HashMap<String, String>();	
 	}
 	
 	
