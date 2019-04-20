@@ -65,15 +65,16 @@ public class Keystore {
 		try {
 			FileInputStream fis = new FileInputStream(filePath);
 			ObjectInputStream ois = new ObjectInputStream(fis);
+			HashMap<String, String> keystore = null;
+	        keystore = (HashMap) ois.readObject();
 			ois.close();
 	        fis.close();
-	        HashMap<String, String> keystore = null;
-	        keystore = (HashMap) ois.readObject();
 	        return keystore;
 		} catch ( IOException | ClassNotFoundException e) {
 			System.out.println(String.format("No valid keystore found with supplied filepath '%s'. Defaulting to empty keystore", filePath));
 			return new HashMap<String, String>();	
 		} 
+
 		
 	}
 	
