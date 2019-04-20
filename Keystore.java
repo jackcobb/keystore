@@ -1,3 +1,9 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -54,15 +60,36 @@ public class Keystore {
 	 * @param filePath refers to the first parameters entered with the program kickoff. 
 	 * @return returns a HashMap based on the data in the keystore file
 	 */
+	@SuppressWarnings("unchecked")
 	private static HashMap<String, String> deserializeKeystore(String filePath) {
-		//if file not found, return new hashmap
-		//if file found, try deserialization; catch exceptions
-		return new HashMap<String, String>();	
+		try {
+			FileInputStream fis = new FileInputStream(filePath);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			ois.close();
+	        fis.close();
+	        HashMap<String, String> keystore = null;
+	        keystore = (HashMap) ois.readObject();
+	        return keystore;
+		} catch ( IOException | ClassNotFoundException e) {
+			System.out.println(String.format("No valid keystore found with supplied filepath '%s'. Defaulting to empty keystore", filePath));
+			return new HashMap<String, String>();	
+		} 
+		
 	}
 	
 	
 	private static void serializeKeystore(String filePath, HashMap<String, String> keystore) {
 		//serialize keystore to a new file located at filePath param
+		try {
+			FileOutputStream fos = new FileOutputStream(filePath);
+			ObjectOutputStream oos = new ObjectOutputStream (fos);
+			oos.writeObject(keystore);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			System.out.println("Exception ocurred serializing keystore to file...");
+			e.printStackTrace();
+		}
 	}
 
 }
